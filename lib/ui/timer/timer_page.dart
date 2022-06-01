@@ -31,7 +31,7 @@ class TimerPage extends StatelessWidget {
               ),
             ],
           ),
-          body: Center(child: Text('eito')));
+          body: Center(child: Text('aaa')));
     });
   }
 }
