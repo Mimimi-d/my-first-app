@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:my_first_app/ui/calendar/calendar_card.dart';
 
 import '../login/login_page.dart';
@@ -15,7 +16,12 @@ import '../../widgets/round_button.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class TimerPage extends StatefulWidget {
-  const TimerPage({Key? key}) : super(key: key);
+  // const TimerPage({Key? key}) : super(key: key);
+  // 引数からユーザー情報を受け取る
+  // const TimerPage(this.user);
+  // ユーザー情報
+  // final User user;
+  int recordTime = 0;
 
   @override
   _CountdownPageState createState() => _CountdownPageState();
@@ -26,6 +32,7 @@ class _CountdownPageState extends State<TimerPage>
   late AnimationController controller;
 
   bool isPlaying = false;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   int countTime = 0;
 

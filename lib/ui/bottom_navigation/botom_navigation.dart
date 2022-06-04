@@ -21,6 +21,7 @@ class _BottomNavigation extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pageList = [HomePage(), TimerPage()];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
