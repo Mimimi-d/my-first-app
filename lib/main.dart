@@ -13,28 +13,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-// void main() {
-//   // await Firebase.initializeApp(
-//   //   options: DefaultFirebaseOptions.currentPlatform,
-//   // );
-//   WidgetsFlutterBinding.ensureInitialized();
-//   initializeDateFormatting().then((_) => runApp(MyApp()));
-// }
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-
-//   runApp(
-//     // Riverpodでデータを受け渡しできる状態にする
-//     ProviderScope(
-//       child: LoginPage(),
-//     ),
-//   );
-// }
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

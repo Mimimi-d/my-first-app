@@ -1,47 +1,17 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_first_app/ui/calendar/calendar_card.dart';
-
 import '../login/login_page.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import '../../widgets/round_button.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
-// class TimerPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Builder(builder: (context) {
-//       return Scaffold(
-//           appBar: AppBar(
-//             title: Text('タイマー'),
-//             actions: <Widget>[
-//               IconButton(
-//                 icon: Icon(Icons.close),
-//                 onPressed: () async {
-//                   await FirebaseAuth.instance.signOut();
-//                   await Navigator.of(context).pushReplacement(
-//                     MaterialPageRoute(builder: (context) {
-//                       return LoginPage();
-//                     }),
-//                   );
-//                 },
-//               ),
-//             ],
-//           ),
-//           body: Center(child: Text('aaa')));
-//     });
-//   }
-// }
-
 class TimerPage extends StatefulWidget {
-  const TimerPage({Key? key}) : super(key: key);
+  // const TimerPage({Key? key}) : super(key: key);
+  // 引数からユーザー情報を受け取る
+  // const TimerPage(this.user);
+  // ユーザー情報
+  // final User user;
+  int recordTime = 0;
 
   @override
   _CountdownPageState createState() => _CountdownPageState();
@@ -52,6 +22,12 @@ class _CountdownPageState extends State<TimerPage>
   late AnimationController controller;
 
   bool isPlaying = false;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  int countTime = 0;
+
+  final Stopwatch _timer = Stopwatch();
+  String duration = '';
 
   String get countText {
     Duration count = controller.duration! * controller.value;
@@ -73,11 +49,12 @@ class _CountdownPageState extends State<TimerPage>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 6),
+      duration: const Duration(seconds: 5),
     );
 
     controller.addListener(() {
       notify();
+
       if (controller.isAnimating) {
         setState(() {
           progress = controller.value;
@@ -85,7 +62,10 @@ class _CountdownPageState extends State<TimerPage>
       } else {
         setState(() {
           progress = 1.0;
+          countTime += _timer.elapsed.inSeconds;
           isPlaying = false;
+          _timer.stop();
+          _timer.reset();
         });
       }
     });
@@ -101,10 +81,10 @@ class _CountdownPageState extends State<TimerPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('タイマー'),
+        title: const Text('タイマー'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
               await Navigator.of(context).pushReplacement(
@@ -116,7 +96,7 @@ class _CountdownPageState extends State<TimerPage>
           ),
         ],
       ),
-      backgroundColor: Color(0xfff5fbff),
+      backgroundColor: const Color(0xfff5fbff),
       body: Column(
         children: [
           Expanded(
@@ -137,7 +117,7 @@ class _CountdownPageState extends State<TimerPage>
                     if (controller.isDismissed) {
                       showModalBottomSheet(
                         context: context,
-                        builder: (context) => Container(
+                        builder: (context) => SizedBox(
                           height: 300,
                           child: CupertinoTimerPicker(
                             initialTimerDuration: controller.duration!,
@@ -173,18 +153,23 @@ class _CountdownPageState extends State<TimerPage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Text(
+                //     "Time; ${_timer.elapsed}, ${_timer.elapsed.inSeconds},$countTime"),
                 GestureDetector(
                   onTap: () {
                     if (controller.isAnimating) {
                       controller.stop();
                       setState(() {
                         isPlaying = false;
+                        countTime += _timer.elapsed.inSeconds;
+                        _timer.stop();
                       });
                     } else {
                       controller.reverse(
                           from: controller.value == 0 ? 1.0 : controller.value);
                       setState(() {
                         isPlaying = true;
+                        _timer.start();
                       });
                     }
                   },
@@ -194,12 +179,17 @@ class _CountdownPageState extends State<TimerPage>
                 ),
                 GestureDetector(
                   onTap: () {
+                    if (isPlaying == true) {
+                      countTime += _timer.elapsed.inSeconds;
+                    }
+
                     controller.reset();
                     setState(() {
                       isPlaying = false;
+                      _timer.reset();
                     });
                   },
-                  child: RoundButton(
+                  child: const RoundButton(
                     icon: Icons.stop,
                   ),
                 ),
