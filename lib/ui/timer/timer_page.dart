@@ -1,17 +1,7 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:my_first_app/ui/calendar/calendar_card.dart';
-
 import '../login/login_page.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import '../../widgets/round_button.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
@@ -163,8 +153,8 @@ class _CountdownPageState extends State<TimerPage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                    "Time; ${_timer.elapsed}, ${_timer.elapsed.inSeconds},$countTime"),
+                // Text(
+                //     "Time; ${_timer.elapsed}, ${_timer.elapsed.inSeconds},$countTime"),
                 GestureDetector(
                   onTap: () {
                     if (controller.isAnimating) {

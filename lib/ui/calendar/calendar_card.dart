@@ -1,11 +1,7 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 
 class CalendarScreen extends StatefulWidget {
   @override
@@ -38,6 +34,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       DateTime(2022, 6, 2): [3000],
       DateTime(2022, 6, 3): [1000],
       DateTime(2022, 6, 4): [60],
+      DateTime(2022, 6, 5): [3360],
 
       // DateTime.now(): ['Event A7', 'Event B7', 'Event C7', 'Event D7'],
       // DateTime.now().add(Duration(days: 1)): [
@@ -286,7 +283,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   height: 15,
                 ),
                 const Text(
-                  '継続7日目',
+                  '継続5日目',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 )
               ],
