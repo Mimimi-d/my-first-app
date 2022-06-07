@@ -46,7 +46,7 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
-        body: Column(
+        body: ListView(
           children: [
             asyncPostsQuery.when(
               // 値が取得できたとき
@@ -68,60 +68,29 @@ class HomePage extends ConsumerWidget {
             ),
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text('Add Record'),
+              content: Text('Enter Record Title'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Ok'),
+                ),
+              ],
+            ),
+          ),
+          label: Text('Add Record'),
+          icon: Icon(Icons.add),
+        ),
       );
     });
   }
 }
-// class HomePage extends ConsumerWidget {
-
-
-//   var _selectIndex = 0;
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     // Providerから値を受け取る
-//     final User user = ref.watch(userProvider.state).state!;
-//     final AsyncValue<QuerySnapshot> asyncPostsQuery =
-//         ref.watch(postsQueryProvider);
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('ホーム'),
-//         actions: <Widget>[
-//           IconButton(
-//             icon: Icon(Icons.close),
-//             onPressed: () async {
-//               await FirebaseAuth.instance.signOut();
-//               await Navigator.of(context).pushReplacement(
-//                 MaterialPageRoute(builder: (context) {
-//                   return LoginPage();
-//                 }),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//       body: Column(
-//         children: [
-//           asyncPostsQuery.when(
-//             // 値が取得できたとき
-//             data: (QuerySnapshot query) {
-//               return CalendarScreen();
-//             },
-//             // 値が読込中のとき
-//             loading: () {
-//               return Center(
-//                 child: Text('読込中...'),
-//               );
-//             },
-//             // 値の取得に失敗したとき
-//             error: (e, stackTrace) {
-//               return Center(
-//                 child: Text(e.toString()),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
