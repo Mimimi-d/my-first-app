@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_first_app/ui/calendar/calendar_card.dart';
 import 'package:my_first_app/ui/timer/timer_page.dart';
-
-import '../calendar/calendar_card_copy.dart';
 import '../login/login_page.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';

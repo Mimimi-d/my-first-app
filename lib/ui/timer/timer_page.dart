@@ -82,19 +82,19 @@ class _CountdownPageState extends State<TimerPage>
     return Scaffold(
       appBar: AppBar(
         title: const Text('タイマー'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              await Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) {
-                  return LoginPage();
-                }),
-              );
-            },
-          ),
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: const Icon(Icons.close),
+        //     onPressed: () async {
+        //       await FirebaseAuth.instance.signOut();
+        //       await Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (context) {
+        //           return LoginPage();
+        //         }),
+        //       );
+        //     },
+        //   ),
+        // ],
       ),
       backgroundColor: const Color(0xfff5fbff),
       body: Column(
