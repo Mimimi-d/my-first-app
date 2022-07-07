@@ -31,18 +31,21 @@ class _CalendarState extends State<Calendar> {
   @override
   void initState() {
     //Map<DateTime, List<int>>型
-    _eventsList = {
-      DateTime(2022, 07, 07): [3, 4],
-    };
+    _eventsList = {};
     print(_eventsList);
     super.initState();
   }
 
   void _addNewTransaction(int txAmount, DateTime chosenDate) {
+    var sam;
     setState(() {
       if (_eventsList.containsKey(chosenDate)) {
         _eventsList[chosenDate]?.add(txAmount);
+        sam = _eventsList[chosenDate]
+            ?.reduce((value, element) => value + element);
+        _eventsList[chosenDate] = [sam];
       } else {
+        print('/');
         _eventsList.addAll({
           chosenDate: [txAmount]
         });
