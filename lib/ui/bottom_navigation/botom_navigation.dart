@@ -1,14 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_first_app/ui/calendar/calendar_card.dart';
 import 'package:my_first_app/ui/home/home_page.dart';
 import 'package:my_first_app/ui/timer/timer_page.dart';
-
-import '../login/login_page.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
