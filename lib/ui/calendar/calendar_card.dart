@@ -31,8 +31,14 @@ class _CalendarState extends State<Calendar> {
   @override
   void initState() {
     //Map<DateTime, List<int>>型
-    _eventsList = {};
-    print(_eventsList);
+    _eventsList = {
+      DateTime.now().add(Duration(days: -1)): [121],
+      DateTime.now().add(Duration(days: -2)): [61],
+      DateTime.now().add(Duration(days: -3)): [1],
+      DateTime.now().add(Duration(days: 3)): [30],
+      DateTime.now().add(Duration(days: 2)): [60],
+      DateTime.now().add(Duration(days: 1)): [90],
+    };
     super.initState();
   }
 
@@ -45,13 +51,12 @@ class _CalendarState extends State<Calendar> {
             ?.reduce((value, element) => value + element);
         _eventsList[chosenDate] = [sam];
       } else {
-        print('/');
         _eventsList.addAll({
           chosenDate: [txAmount]
         });
       }
+      print(_eventsList);
     });
-    print(_eventsList);
   }
 
   void _startAddNewRecord(BuildContext ctx) {
@@ -99,7 +104,7 @@ class _CalendarState extends State<Calendar> {
 
     List _getEventForDay(DateTime day) {
       //  _events[day]がnullでなければ、 _events[day]を返す。
-      print("_events" + '$_events');
+      // print("_events" + '$_events');
       return _events[day] ?? [];
     }
 
@@ -135,6 +140,14 @@ class _CalendarState extends State<Calendar> {
                   // selectedDayPredicate: (DateTime date) {
                   //   return isSameDay(selectedDay, date);
                   // },
+                  calendarBuilders: CalendarBuilders(
+                    markerBuilder: (context, date, events) {
+                      if (events.isNotEmpty) {
+                        return _buildEventsMarker(date, events);
+                      }
+                    },
+                  ),
+
                   eventLoader: _getEventForDay,
                   //To style the Calendar
                   calendarStyle: CalendarStyle(
@@ -184,4 +197,49 @@ class _CalendarState extends State<Calendar> {
       ),
     );
   }
+}
+
+Widget _buildEventsMarker(DateTime date, List events) {
+  print(events);
+  return Positioned(
+    right: 5,
+    bottom: 5,
+    child: AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        color: _colorChange(events),
+        // color: Colors.blue[300],
+        borderRadius: BorderRadius.circular(5),
+      ),
+      width: 38.0,
+      height: 38.0,
+      child: Center(
+        child: Text(
+          '${date.day}',
+          style: TextStyle().copyWith(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+_colorChange(List events) {
+  int num = 0;
+  if (events.first >= 120) {
+    num = 800;
+  } else if (events.first >= 90) {
+    num = 600;
+  } else if (events.first >= 60) {
+    num = 500;
+  } else if (events.first >= 30) {
+    num = 300;
+  } else {
+    num = 100;
+  }
+
+  return Colors.blue[num];
 }
