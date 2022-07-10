@@ -35,9 +35,9 @@ class _CalendarState extends State<Calendar> {
       DateTime.now().add(Duration(days: -1)): [121],
       DateTime.now().add(Duration(days: -2)): [61],
       DateTime.now().add(Duration(days: -3)): [1],
-      DateTime.now().add(Duration(days: 3)): [30],
-      DateTime.now().add(Duration(days: 2)): [60],
-      DateTime.now().add(Duration(days: 1)): [90],
+      DateTime.now().add(Duration(days: -4)): [30],
+      DateTime.now().add(Duration(days: -5)): [60],
+      DateTime.now().add(Duration(days: -6)): [90],
     };
     super.initState();
   }
@@ -126,6 +126,7 @@ class _CalendarState extends State<Calendar> {
                   focusedDay: selectedDay,
                   firstDay: DateTime(1990),
                   lastDay: DateTime(2050),
+
                   calendarFormat: format,
                   startingDayOfWeek: StartingDayOfWeek.sunday,
                   daysOfWeekVisible: true,
@@ -141,10 +142,57 @@ class _CalendarState extends State<Calendar> {
                   //   return isSameDay(selectedDay, date);
                   // },
                   calendarBuilders: CalendarBuilders(
+                    todayBuilder: (context, day, _) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        decoration: BoxDecoration(
+                          // shape: BoxShape.rectangle,
+                          color: Colors.blueGrey[300],
+                          shape: BoxShape.circle,
+                          // border: Border.all(),
+                          // borderRadius: BorderRadius.circular(5),
+                        ),
+                        width: 38.0,
+                        height: 38.0,
+                        child: Center(
+                          child: Text(
+                            '${DateTime.now().day}',
+                            style: TextStyle().copyWith(
+                              // color: Colors.white,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                     markerBuilder: (context, date, events) {
                       if (events.isNotEmpty) {
                         return _buildEventsMarker(date, events);
                       }
+                    },
+                    defaultBuilder: (context, day, _) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        width: 38.0,
+                        height: 38.0,
+                        child: Center(
+                          child: Text(
+                            '${day.day}',
+                            style: TextStyle().copyWith(
+                              // color: Colors.white,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   ),
 
@@ -159,6 +207,7 @@ class _CalendarState extends State<Calendar> {
                     ),
                     selectedTextStyle: TextStyle(color: Colors.white),
                     // todayDecoration: BoxDecoration(
+                    //   border: Border.all(),
                     //   color: Colors.purpleAccent,
                     //   shape: BoxShape.rectangle,
                     //   borderRadius: BorderRadius.circular(5.0),
@@ -200,27 +249,29 @@ class _CalendarState extends State<Calendar> {
 }
 
 Widget _buildEventsMarker(DateTime date, List events) {
-  print(events);
-  return Positioned(
-    right: 5,
-    bottom: 5,
-    child: AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        color: _colorChange(events),
-        // color: Colors.blue[300],
-        borderRadius: BorderRadius.circular(5),
-      ),
-      width: 38.0,
-      height: 38.0,
-      child: Center(
-        child: Text(
-          '${date.day}',
-          style: TextStyle().copyWith(
-            color: Colors.white,
-            fontSize: 12.0,
+  return AnimatedContainer(
+    duration: const Duration(milliseconds: 300),
+    decoration: date.day == DateTime.now().day
+        ? BoxDecoration(
+            shape: BoxShape.circle,
+            color: _colorChange(events),
+            // color: Colors.blue[300],
+            // borderRadius: BorderRadius.circular(5),
+          )
+        : BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: _colorChange(events),
+            // color: Colors.blue[300],
+            borderRadius: BorderRadius.circular(5),
           ),
+    width: 38.0,
+    height: 38.0,
+    child: Center(
+      child: Text(
+        '${date.day}',
+        style: TextStyle().copyWith(
+          color: Colors.white,
+          fontSize: 12.0,
         ),
       ),
     ),
