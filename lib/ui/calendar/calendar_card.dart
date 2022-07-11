@@ -284,12 +284,13 @@ Widget _buildEventsMarker(DateTime date, List events) {
   );
 }
 
+//30,60,90,120で色を変える
 _colorChange(List events) {
   int num = 0;
   if (events.first >= 120) {
     num = 800;
   } else if (events.first >= 90) {
-    num = 600;
+    num = 700;
   } else if (events.first >= 60) {
     num = 500;
   } else if (events.first >= 30) {
