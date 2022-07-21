@@ -248,6 +248,7 @@ class _CalendarState extends State<Calendar> {
   }
 }
 
+//色付け
 Widget _buildEventsMarker(DateTime date, List events) {
   return AnimatedContainer(
     duration: const Duration(milliseconds: 300),
@@ -255,6 +256,7 @@ Widget _buildEventsMarker(DateTime date, List events) {
         ? BoxDecoration(
             shape: BoxShape.circle,
             color: _colorChange(events),
+            border: Border.all(width: 1, color: Colors.grey),
             // color: Colors.blue[300],
             // borderRadius: BorderRadius.circular(5),
           )
@@ -262,6 +264,10 @@ Widget _buildEventsMarker(DateTime date, List events) {
             shape: BoxShape.rectangle,
             color: _colorChange(events),
             // color: Colors.blue[300],
+            border: Border.all(
+              width: 1,
+              color: Colors.grey,
+            ),
             borderRadius: BorderRadius.circular(5),
           ),
     width: 38.0,
@@ -278,12 +284,13 @@ Widget _buildEventsMarker(DateTime date, List events) {
   );
 }
 
+//30,60,90,120で色を変える
 _colorChange(List events) {
   int num = 0;
   if (events.first >= 120) {
     num = 800;
   } else if (events.first >= 90) {
-    num = 600;
+    num = 700;
   } else if (events.first >= 60) {
     num = 500;
   } else if (events.first >= 30) {
